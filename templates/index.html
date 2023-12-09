@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Pytube Example</title>
+</head>
+<body>
+    <h1>Descargar y Reproducir Video de YouTube</h1>
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    {% if video_url %}
+        <video width="640" height="360" controls>
+            <source src="{{ video_url }}" type="video/mp4">
+            Tu navegador no soporta el tag de video.
+        </video>
+    {% endif %}
+
+    <form method="post">
+        <label for="url">URL del video de YouTube:</label>
+        <input type="text" name="url" required>
+        <button type="submit">Descargar</button>
+    </form>
+</body>
+</html>
