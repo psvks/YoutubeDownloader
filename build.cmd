@@ -1,1 +1,1 @@
-pyinstaller --noconfirm --onefile --console  "C:/Users/usr/Documents/GitHub/YoutubeDownloader/main.py"
+pyinstaller --noconfirm --onefile --console  ""
