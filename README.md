@@ -25,6 +25,5 @@ Open the Build file in the source code and edit it to include your file path. Fo
 ```pyinstaller --noconfirm --onefile --console "C:/Users/usr/Documents/GitHub/YoutubeDownloader/main.py"```  
 ### Run the Executable:
 Open a CMD terminal, navigate to the directory containing your executable, and execute the following command:  
-`main.exe <urltoyoutube> <format>`
-Replace `<urltoyoutube>` with the YouTube video URL and `<format>` with the desired format (mp4 or mp3).
-This README provides clearer instructions on how to install the necessary de
+`main.exe <urltoyoutube> <format>`  
+Replace `<urltoyoutube>` with the YouTube video URL and `<format>` with the desired format (mp4 or mp3).  
