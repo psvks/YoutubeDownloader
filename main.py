@@ -6,6 +6,7 @@ import os
 import time
 import math
 
+
 def convert_size(size_bytes):
    if size_bytes == 0:
        return "0B"
@@ -16,7 +17,7 @@ def convert_size(size_bytes):
    return "%s %s" % (s, size_name[i])
 
 
-def download_video(url, format):
+def downloadVideo(url, format, debug):
     try:
         yt = YouTube(url)
         if format == "mp4":
@@ -36,7 +37,9 @@ def download_video(url, format):
         if format == "mp3":
             video_stream.download()
             video = VideoFileClip(f"{yt.title}.mp4")
-            video.audio.write_audiofile(f"{yt.title}.mp3")
+            video.audio.write_audiofile(f"{yt.title}.mp3", verbose=False)
+            if debug:
+                print(video_stream.get_file_path())
             print(f"{Fore.LIGHTGREEN_EX}Conversion and download complete.")
         else:
             video_stream.download()
@@ -48,5 +51,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Download youtube videos")
     parser.add_argument("url", help="URL of the youtube video")
     parser.add_argument("format", choices=["mp4", "only_audio", "mp3"], help="Format. ('mp4', 'only_audio', 'mp3')")
+    parser.add_argument("--debug", action='store_true', help="Returns were the MP3 or MP4 is. (For servers or other things.)")
     args = parser.parse_args()
-    download_video(args.url, args.format)
+    downloadVideo(args.url, args.format, args.debug)
