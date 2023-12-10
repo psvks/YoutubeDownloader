@@ -19,11 +19,11 @@ def download_video(url, format):
         video_stream.download()
         print("Download complete.")
     except Exception as e:
-        print(f"Ocurrió un error: {e}")
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Descargar videos de YouTube.")
-    parser.add_argument("url", help="URL del video de YouTube")
-    parser.add_argument("format", choices=["mp4", "only_audio"], help="Formato de salida ('mp4' o 'mp3')")
+    parser = argparse.ArgumentParser(description="Download youtube videos")
+    parser.add_argument("url", help="URL of the youtube video")
+    parser.add_argument("format", choices=["mp4", "only_audio"], help="Format. ('mp4', 'only_audio')")
     args = parser.parse_args()
     download_video(args.url, args.format)
