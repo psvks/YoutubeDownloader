@@ -4,6 +4,7 @@ from colorama import *
 from moviepy.editor import *
 from hurry.filesize import verbose, size
 from tqdm import tqdm
+from pytube.cli import on_progress
 
 
 def makeVidFolder():
@@ -23,13 +24,7 @@ def downloadVideo(url, format, debug):
     folder_video = os.path.join(os.getcwd(), 'videos')
     folder_audio = os.path.join(os.getcwd(), 'audio')
     try:
-        def progress_function(chunk, file_handle, bytes_remaining):
-            current = ((total_size - bytes_remaining) / total_size)
-            percent = int(current * 100)
-            with tqdm(total=100, desc="Downloading", unit="%", position=0, leave=True) as pbar:
-                pbar.update(percent - pbar.n)
-
-        yt = YouTube(url, on_progress_callback=progress_function)
+        yt = YouTube(url, on_progress_callback=on_progress)
         if format == "mp4":
             video_stream = yt.streams.filter(file_extension='mp4').get_highest_resolution()
         elif format == "only_audio":
@@ -46,6 +41,7 @@ def downloadVideo(url, format, debug):
         print(f'{Fore.LIGHTCYAN_EX}Writing file.{Fore.RESET}')
         if format == "mp3":
             video_stream.download(output_path=folder_video)
+            print('Done |')
             video = VideoFileClip(f"{folder_video}\\{yt.title}.mp4")
             print(f'{Fore.LIGHTCYAN_EX}Writing .mp3 file.{Fore.RESET}')
             video.audio.write_audiofile(f"{folder_audio}\\{yt.title}.mp3", verbose=False, logger=None)
@@ -54,6 +50,7 @@ def downloadVideo(url, format, debug):
             print(f"{Fore.LIGHTGREEN_EX}Conversion and download complete.")
         else:
             video_stream.download(output_path=folder_video)
+            print('Done |')
             print(f'{Fore.LIGHTGREEN_EX}Download complete.')
     except Exception as e:
         print(f"Error: {e}")
