@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Downloader</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f8f8;
+        }
+
+        header {
+            background-color: #3498db;
+            padding: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #fff;
+            margin: 0;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 10px;
+        }
+
+        section {
+            background-color: #e9e9e9;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        h3 {
+            color: #333;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 80%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Video Downloader</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About This Project</a>
+            <a href="/license">License</a>
+        </nav>
+    </header>
+
+    <div>
+        <section>
+            <h3>Video Downloader</h3>
+            <input type="text" class="video-ID" placeholder="Enter Video ID">
+            <a href="#" onclick="downloadVideo()"><button>Download</button></a>
+
+            <h3>Audio Downloader</h3>
+            <input type="text" class="audio-ID" placeholder="Enter Video ID">
+            <a href="#" onclick="downloadAudio()"><button>Download</button></a>
+        </section>
+    </div>
+
+    <script>
+        function downloadVideo() {
+            var videoID = document.querySelector('.video-ID').value;
+            console.log('Video ID:', videoID);
+            window.location.href = '/video?id=' + videoID;
+        }
+
+        function downloadAudio() {
+            var audioID = document.querySelector('.audio-ID').value;
+            console.log('Audio ID:', audioID);
+            window.location.href = '/audio?id=' + audioID;
+        }
+    </script>
+</body>
+</html>
