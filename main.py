@@ -4,8 +4,11 @@ import os
 from moviepy.editor import *
 import shutil
 import automaticDel
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
 
 VIDEO_DIR = 'static'
 if not os.path.exists(VIDEO_DIR):
