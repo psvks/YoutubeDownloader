@@ -2,3 +2,7 @@ pytube==15.0.0
 argparse
 colorama
 pyinstaller
+time
+os
+moviepy
+math
