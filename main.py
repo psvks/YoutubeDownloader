@@ -2,12 +2,33 @@ from flask import Flask, render_template, request, send_from_directory
 from pytube import YouTube
 import os
 from moviepy.editor import *
+import shutil
+import automaticDel
 
 app = Flask(__name__)
 
 VIDEO_DIR = 'static'
 if not os.path.exists(VIDEO_DIR):
     os.makedirs(VIDEO_DIR)
+
+def delete_static_contents():
+    static_path = 'static'
+    if os.path.exists(static_path):
+        for filename in os.listdir(static_path):
+            file_path = os.path.join(static_path, filename)
+            try:
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                print(f'Fail {file_path}: {e}')
+    else:
+        print('The folder does not exist.')
+
+
+
+
 
 @app.route('/video', methods=['GET'])
 def video():
