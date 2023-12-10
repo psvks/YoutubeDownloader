@@ -2,20 +2,8 @@ import argparse
 from pytube import YouTube
 from colorama import *
 from moviepy.editor import *
-import os
-import time
 import math
-
-
-def convert_size(size_bytes):
-   if size_bytes == 0:
-       return "0B"
-   size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-   i = int(math.floor(math.log(size_bytes, 1024)))
-   p = math.pow(1024, i)
-   s = round(size_bytes / p, 2)
-   return "%s %s" % (s, size_name[i])
-
+from hurry.filesize import verbose, size
 
 def downloadVideo(url, format, debug):
     try:
@@ -32,7 +20,7 @@ def downloadVideo(url, format, debug):
         video_title = yt.title
         download_path = f"{video_title}.{video_stream.subtype}"
         total_size = video_stream.filesize
-        print(f'{Fore.LIGHTYELLOW_EX}YTDownloader{Fore.RESET} will be downloading: {Fore.LIGHTCYAN_EX}{convert_size(total_size)}{Fore.RESET}')
+        print(f'{Fore.LIGHTYELLOW_EX}YTDownloader{Fore.RESET} will be downloading: {Fore.LIGHTCYAN_EX}{size(total_size, system=verbose)}{Fore.RESET}')
         print(f'{Fore.LIGHTCYAN_EX}Writing file.{Fore.RESET}')
         if format == "mp3":
             video_stream.download()
