@@ -48,7 +48,7 @@ def audio():
     video_id = request.args.get('id')
     audio_path = os.path.join(VIDEO_DIR, f'{video_id}.mp3')
     video_path = os.path.join(VIDEO_DIR, f'{video_id}.mp4')
-    destination = os.path.join(VIDEO_DIR)
+    destination = os.path.join(os.getcwd(), VIDEO_DIR)
     if not os.path.exists(video_path):
         youtube_url = f'https://www.youtube.com/watch?v={video_id}'
         download_video(youtube_url, destination, video_id)
@@ -69,7 +69,8 @@ def download_video(url, output_path, id):
 
 def convert_mp3(video_path, destination, id):
     video = VideoFileClip(video_path)
-    video.audio.write_audiofile(f"{destination}\\{id}.mp3", verbose=False, logger=None)
+    print(destination)
+    video.audio.write_audiofile(f"{destination}/{id}.mp3")
 
 @app.route('/videos/<filename>')
 def uploaded_file(filename):
