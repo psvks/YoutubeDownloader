@@ -2,12 +2,34 @@ import argparse
 from pytube import YouTube
 from colorama import *
 from moviepy.editor import *
-import math
 from hurry.filesize import verbose, size
+from tqdm import tqdm
+
+
+def makeVidFolder():
+    folder_name = "videos"
+    folder_path = os.path.join(os.getcwd(), folder_name)
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    else:
+        pass
+    if not os.path.exists(os.path.join(os.getcwd(), 'audio')):
+        os.makedirs(os.path.join(os.getcwd(), 'audio'))
+    else:
+        pass
 
 def downloadVideo(url, format, debug):
+    makeVidFolder()
+    folder_video = os.path.join(os.getcwd(), 'videos')
+    folder_audio = os.path.join(os.getcwd(), 'audio')
     try:
-        yt = YouTube(url)
+        def progress_function(chunk, file_handle, bytes_remaining):
+            current = ((total_size - bytes_remaining) / total_size)
+            percent = int(current * 100)
+            with tqdm(total=100, desc="Downloading", unit="%", position=0, leave=True) as pbar:
+                pbar.update(percent - pbar.n)
+
+        yt = YouTube(url, on_progress_callback=progress_function)
         if format == "mp4":
             video_stream = yt.streams.filter(file_extension='mp4').get_highest_resolution()
         elif format == "only_audio":
@@ -23,14 +45,15 @@ def downloadVideo(url, format, debug):
         print(f'{Fore.LIGHTYELLOW_EX}YTDownloader{Fore.RESET} will be downloading: {Fore.LIGHTCYAN_EX}{size(total_size, system=verbose)}{Fore.RESET}')
         print(f'{Fore.LIGHTCYAN_EX}Writing file.{Fore.RESET}')
         if format == "mp3":
-            video_stream.download()
-            video = VideoFileClip(f"{yt.title}.mp4")
-            video.audio.write_audiofile(f"{yt.title}.mp3", verbose=False)
+            video_stream.download(output_path=folder_video)
+            video = VideoFileClip(f"{folder_video}\\{yt.title}.mp4")
+            print(f'{Fore.LIGHTCYAN_EX}Writing .mp3 file.{Fore.RESET}')
+            video.audio.write_audiofile(f"{folder_audio}\\{yt.title}.mp3", verbose=False, logger=None)
             if debug:
                 print(video_stream.get_file_path())
             print(f"{Fore.LIGHTGREEN_EX}Conversion and download complete.")
         else:
-            video_stream.download()
+            video_stream.download(output_path=folder_video)
             print(f'{Fore.LIGHTGREEN_EX}Download complete.')
     except Exception as e:
         print(f"Error: {e}")
