@@ -1,6 +1,7 @@
 # YouTube Downloader
 This project is a YouTube video downloader created with Python, utilizing the `PyTube` library.  
 **NOTE**: This project will be supported in case bugs arise or new features are required. I cannot guarantee that I will continue with this project in the future.
+**NOTE**: You need FFMPEG to convert the files to .mp3
 
 ## Requirements
 Ensure you have Python 3.12.0 installed on your system. To install the necessary libraries, run the following command:    
